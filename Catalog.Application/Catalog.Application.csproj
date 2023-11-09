@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Catalog.Domaim\Catalog.Domaim.csproj" />
+  </ItemGroup>
+
 </Project>
