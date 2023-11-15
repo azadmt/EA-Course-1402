@@ -1,6 +1,7 @@
-using Castle.Components.DictionaryAdapter.Xml;
 using Framework.ApplicationBus;
+
 using Framework.Core.Bus;
+
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 

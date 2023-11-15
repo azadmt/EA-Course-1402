@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Framework.Application\Framework.ApplicationBus.csproj" />
+    <ProjectReference Include="..\Framework.Core\Framework.Core.csproj" />
     <ProjectReference Include="..\Framework.Domain\Framework.Core.csproj" />
   </ItemGroup>
 

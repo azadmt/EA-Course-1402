@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagement", "OrderMan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Domain", "OrderManagement.Domain\OrderManagement.Domain.csproj", "{072288C3-7979-458B-960F-1322B6597312}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "Framework.Domain\Framework.Core.csproj", "{6AD3F4FF-F82A-417F-B743-BBD95864AF79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "Framework.Core\Framework.Core.csproj", "{6AD3F4FF-F82A-417F-B743-BBD95864AF79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.ApplicationBus", "Framework.Application\Framework.ApplicationBus.csproj", "{E59CF16A-E1FC-4C01-A6A9-7A7537E6A55E}"
 EndProject
