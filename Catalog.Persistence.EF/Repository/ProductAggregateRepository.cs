@@ -10,15 +10,21 @@ namespace Catalog.Persistence.EF.Repository
 {
     public class ProductAggregateRepository : IProductRepository
     {
-        private readonly ProductCatalogDebContext uow;
+        private readonly ProductCatalogDbContext uow;
 
-        public ProductAggregateRepository(ProductCatalogDebContext uow)
+        public ProductAggregateRepository(ProductCatalogDbContext uow)
         {
             this.uow = uow;
         }
         public ProductAggregate Get(ProductCode code)
         {
             return uow.Products.SingleOrDefault(p => p.Code == code);
+        }
+
+        public ProductAggregate Get(Guid id)
+        {
+            return uow.Products.SingleOrDefault(p => p.Id==id);
+
         }
 
         public void Save(ProductAggregate product)

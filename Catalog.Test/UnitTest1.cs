@@ -20,7 +20,7 @@ namespace Catalog.Test
             var sut = new ProductService(productRepo, productCategoryRepo);
 
             //Act
-            var createProductDto = new Application.DataContract.CreateProductDto
+            var createProductDto = new Application.DataContract.CreateProductCommand
             {
                 Category = someCategoryId,
                 CountryCode = "100",
@@ -37,6 +37,7 @@ namespace Catalog.Test
             Assert.True(createProductDto.Price == createdProduct.Price.Value);
 
         }
+
     }
 
 
@@ -65,6 +66,12 @@ namespace Catalog.Test
         public ProductAggregate Get(ProductCode code)
         {
             return _db.Single(x => x.Code.Value == code.Value);
+        }
+
+        public ProductAggregate Get(Guid id)
+        {
+            return _db.Single(x => x.Id == id);
+
         }
 
         public void Save(ProductAggregate product)

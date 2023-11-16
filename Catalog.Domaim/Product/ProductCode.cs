@@ -1,12 +1,13 @@
 ﻿using Framework.Domain;
 using System;
+using System.Collections.Generic;
 
 namespace Catalog.Domaim
 {
     public class ProductCode : ValueObject
     {
         public string Value { get; private set; }
-        public ProductCode(string categoryCode,string countryCode)
+        public ProductCode(string categoryCode, string countryCode)
         {
             if (string.IsNullOrEmpty(categoryCode))
                 throw new ArgumentException();
@@ -16,5 +17,11 @@ namespace Catalog.Domaim
             Value = $"{countryCode}{categoryCode}";
         }
 
+        protected override IEnumerable<object> GetEqualityAttribute()
+        {
+            yield return Value;
+
+
+        }
     }
 }
