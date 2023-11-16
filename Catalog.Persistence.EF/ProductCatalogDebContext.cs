@@ -1,10 +1,11 @@
 ﻿using Catalog.Domaim;
 using Catalog.Domaim.ProductCategory;
+using Framework.Persistence.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Persistence.EF
 {
-    public class ProductCatalogDbContext : DbContext
+    public class ProductCatalogDbContext : ApplicationDbContext
     {
         public ProductCatalogDbContext()
         {

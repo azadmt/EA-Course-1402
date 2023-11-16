@@ -6,6 +6,7 @@ using Catalog.Domaim.ProductCategory;
 using Catalog.Persistence.EF;
 using Catalog.Persistence.EF.Repository;
 using Framework.Core;
+using Framework.Core.Persistence;
 
 namespace Catalog.WebApi
 {
@@ -25,6 +26,7 @@ namespace Catalog.WebApi
             builder.Services.AddScoped<ICommandBus, Bus>();
             builder.Services.AddScoped<IProductRepository, ProductAggregateRepository>();
             builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            builder.Services.AddScoped<IUnitOfWork, ProductCatalogDbContext>();
             builder.Services.AddDbContext<ProductCatalogDbContext>();
 
             var app = builder.Build();

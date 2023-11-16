@@ -1,4 +1,5 @@
 ﻿using Catalog.Domaim.ProductCategory;
+using Framework.Core.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Catalog.Persistence.EF.Repository
 {
     public class ProductCategoryRepository : IProductCategoryRepository
     {
-        private readonly ProductCatalogDbContext _uow;
+        private readonly IUnitOfWork _uow;
 
-        public ProductCategoryRepository(ProductCatalogDbContext uow)
+        public ProductCategoryRepository(IUnitOfWork uow)
         {
             this._uow = uow;
         }
