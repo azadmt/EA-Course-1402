@@ -7,7 +7,7 @@ namespace Framework.Persistence.EF
     {
         public void Commit()
         {
-          SaveChanges();
+            SaveChanges();
         }
     }
 }
