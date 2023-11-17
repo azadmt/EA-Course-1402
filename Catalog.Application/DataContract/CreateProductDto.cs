@@ -13,10 +13,20 @@ namespace Catalog.Application.DataContract
         public Guid Category { get; set; }
         public decimal Price { get; set; }
         public string CountryCode { get; set; }
+
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ActiveProductCommand : ICommand
     {
         public Guid Id { get; set; }
+
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

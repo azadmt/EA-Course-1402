@@ -2,21 +2,6 @@
 
 namespace Framework.Core
 {
-    public interface ICommandBus
-    {
-        void Send<TCommand>(TCommand command) where TCommand : ICommand;
-    }
-
-    public interface ICommand
-    {
-        bool IsValid();
-    }
-
-    public interface ICommandHandler<TCommand>
-    {
-        void Handle(TCommand command);
-    }
-
     public class Bus : ICommandBus
     {
         private readonly IServiceProvider serviceProvider;
@@ -28,7 +13,6 @@ namespace Framework.Core
 
         public void Send<TCommand>(TCommand command) where TCommand : ICommand
         {
-          
             var handler = serviceProvider.GetService<ICommandHandler<TCommand>>();
 
             handler.Handle(command);
