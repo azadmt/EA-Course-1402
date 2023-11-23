@@ -6,6 +6,10 @@ namespace Catalog.Domaim
 {
     public class ProductCode : ValueObject
     {
+        private ProductCode()
+        {
+
+        }
         public string Value { get; private set; }
         public ProductCode(string categoryCode, string countryCode)
         {

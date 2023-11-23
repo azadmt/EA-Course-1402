@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Catalog.Domaim
 {
     public class Price : ValueObject
-    {
+    {        
         public decimal Value { get; private set; }
 
         public Price(decimal value)

@@ -1,12 +1,14 @@
 using Catalog.Application;
 using Catalog.Application.DataContract;
 using Catalog.Application.Product;
+using Catalog.Application.ProductCategory;
 using Catalog.Domaim.Product;
 using Catalog.Domaim.ProductCategory;
 using Catalog.Persistence.EF;
 using Catalog.Persistence.EF.Repository;
 using Framework.Core;
 using Framework.Core.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.WebApi
 {
@@ -23,11 +25,16 @@ namespace Catalog.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICommandHandler<CreateProductCommand>, CreateProductCommandHandler>();
+            builder.Services.AddScoped<ICommandHandler<CreateProductCategoryCommand>, ProductCategoryCommandHandler>();
             builder.Services.AddScoped<ICommandBus, Bus>();
             builder.Services.AddScoped<IProductRepository, ProductAggregateRepository>();
             builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             builder.Services.AddScoped<IUnitOfWork, ProductCatalogDbContext>();
-            builder.Services.AddDbContext<ProductCatalogDbContext>();
+            
+            builder.Services
+                .AddDbContext<ProductCatalogDbContext>(x=> 
+                x
+                .UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
             var app = builder.Build();
 

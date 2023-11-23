@@ -26,7 +26,7 @@ namespace Catalog.Application.DataContract
 
         public bool IsValid()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

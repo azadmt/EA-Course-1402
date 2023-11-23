@@ -2,6 +2,10 @@
 {
     public abstract class Entity<TId>
     {
+        public Entity()
+        {
+
+        }
         public TId Id { get; private set; }
 
         public Entity(TId id)

@@ -30,7 +30,7 @@ namespace Catalog.Persistence.EF.Repository
         public void Save(ProductAggregate product)
         {
             uow.Products.Add(product);
-            //uow.SaveChanges();
+            uow.SaveChanges();
 
         }
 

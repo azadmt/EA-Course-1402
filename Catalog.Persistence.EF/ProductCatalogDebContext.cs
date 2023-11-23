@@ -7,9 +7,16 @@ namespace Catalog.Persistence.EF
 {
     public class ProductCatalogDbContext : ApplicationDbContext
     {
-        public ProductCatalogDbContext()
+        public ProductCatalogDbContext(DbContextOptions options):base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .ApplyConfigurationsFromAssembly(typeof(ProductCatalogDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
         public DbSet<ProductAggregate> Products { get; set; }
         public DbSet<ProductCategoryAggregate> ProductCategories { get; set; }

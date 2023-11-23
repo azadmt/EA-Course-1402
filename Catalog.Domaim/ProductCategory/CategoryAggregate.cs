@@ -9,6 +9,10 @@ namespace Catalog.Domaim.ProductCategory
 {
     public class ProductCategoryAggregate : Entity<Guid>
     {
+        private ProductCategoryAggregate()
+        {
+
+        }
         public ProductCategoryAggregate(Guid id,string name,string code) : base(id)
         {
             Name = name;

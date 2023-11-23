@@ -10,20 +10,22 @@ namespace Catalog.Persistence.EF.Repository
 {
     public class ProductCategoryRepository : IProductCategoryRepository
     {
-        private readonly IUnitOfWork _uow;
+        private readonly ProductCatalogDbContext dbContext;
 
-        public ProductCategoryRepository(IUnitOfWork uow)
+        public ProductCategoryRepository(ProductCatalogDbContext dbContext)
         {
-            this._uow = uow;
+            
+            this.dbContext = dbContext;
         }
         public ProductCategoryAggregate Get(Guid id)
         {
-            throw new NotImplementedException();
+            return dbContext.ProductCategories.Single(p=> p.Id==id);
         }
 
         public void Save(ProductCategoryAggregate productCategory)
         {
-            throw new NotImplementedException();
+            dbContext.Add(productCategory);
+            dbContext.SaveChanges();
         }
 
         public void Update(ProductCategoryAggregate productCategory)

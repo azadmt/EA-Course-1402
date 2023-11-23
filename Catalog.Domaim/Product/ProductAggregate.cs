@@ -5,6 +5,10 @@ namespace Catalog.Domaim
 {
     public class ProductAggregate : Entity<Guid>
     {
+        private  ProductAggregate()
+        {
+
+        }
         public ProductAggregate(Guid id,Guid catId, Price price,ProductCode productCode) : base(id)
         {
             Price = price;

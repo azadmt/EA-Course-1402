@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Catalog.Application.DataContract;
+using Framework.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers
@@ -7,6 +9,19 @@ namespace Catalog.WebApi.Controllers
     [ApiController]
     public class ProductCategoryController : ControllerBase
     {
+        private readonly ICommandBus bus;
+
+        public ProductCategoryController(ICommandBus bus)
+        {
+            this.bus = bus;
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct( CreateProductCategoryCommand command)
+        {            
+            bus.Send(command);
+            return Ok();
+        }
 
     }
 }
