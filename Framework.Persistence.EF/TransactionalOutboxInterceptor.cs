@@ -31,7 +31,7 @@ namespace Framework.Persistence.EF
             sb.AppendLine($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ");
             foreach (var item in outbox)
             {
-                sb.AppendLine($"({item.Id},{JsonConvert.SerializeObject(item)},'false')");
+                sb.AppendLine($"({item.Id},{item.GetType()},{JsonConvert.SerializeObject(item)},'false')");
             }
             eventData
            .Context
