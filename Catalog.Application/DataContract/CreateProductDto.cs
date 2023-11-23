@@ -14,7 +14,7 @@ namespace Catalog.Application.DataContract
         public decimal Price { get; set; }
         public string CountryCode { get; set; }
 
-        public bool IsValid()
+        public CommandValidationResult Validate()
         {
             throw new NotImplementedException();
         }
@@ -24,7 +24,7 @@ namespace Catalog.Application.DataContract
     {
         public Guid Id { get; set; }
 
-        public bool IsValid()
+        public CommandValidationResult Validate()
         {
             throw new NotImplementedException();
         }

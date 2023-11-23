@@ -7,6 +7,7 @@ using Catalog.Persistence.EF;
 using Catalog.Persistence.EF.Repository;
 using Framework.Core;
 using Framework.Core.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.WebApi
 {
@@ -27,7 +28,11 @@ namespace Catalog.WebApi
             builder.Services.AddScoped<IProductRepository, ProductAggregateRepository>();
             builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             builder.Services.AddScoped<IUnitOfWork, ProductCatalogDbContext>();
-            builder.Services.AddDbContext<ProductCatalogDbContext>();
+            builder.Services
+                //  .AddDbContext<ProductCatalogDbContext>(opt => opt.UseSqlServer("connectionstring"))
+                .AddDbContext<ProductCatalogDbContext>(opt => opt.UseInMemoryDatabase(nameof(ProductCatalogDbContext)))
+
+                ;
 
             var app = builder.Build();
 
@@ -39,7 +44,6 @@ namespace Catalog.WebApi
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

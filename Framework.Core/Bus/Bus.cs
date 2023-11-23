@@ -12,7 +12,13 @@ namespace Framework.Core
         }
 
         public void Send<TCommand>(TCommand command) where TCommand : ICommand
+
         {
+            var validationResult = command.Validate();
+            if (validationResult.HasError)
+            {
+                throw new InvalidOperationException(string.Join("\r\n", validationResult.Errors));
+            }
             var handler = serviceProvider.GetService<ICommandHandler<TCommand>>();
 
             handler.Handle(command);
