@@ -1,5 +1,6 @@
 ﻿using Framework.Core;
 using Framework.Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
@@ -16,8 +17,8 @@ namespace Framework.Persistence.EF
     {
         public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
         {
-            var outbox = eventData
-                   .Context
+            var dbcontext = (eventData.Context as OutboxSupportApplicationDbContext);
+            var outbox = dbcontext
                    .ChangeTracker
                    .Entries<IAggregateRoot>()
                    .Select(entry => entry.Entity)
@@ -25,18 +26,40 @@ namespace Framework.Persistence.EF
                        {
                            var domainEvents = entity.GetChanges();
                            return domainEvents;
-                       });
+                       })
+                       .ToList();
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ");
+            sb.Append($" (@Id,@EventType,@EventBody)");
             foreach (var item in outbox)
             {
-                sb.AppendLine($"({item.Id},{item.GetType()},{JsonConvert.SerializeObject(item)},'false')");
+                object[] paramItems = new object[]
+                    {
+                        new SqlParameter("@Id", item.Id.ToString()),
+                        new SqlParameter("@EventType", item.GetType().Name),
+                        new SqlParameter("@EventBody", JsonConvert.SerializeObject(item)),
+                    };
+                //  sb.Append($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ('{item.Id}','{item.GetType()}','{JsonConvert.SerializeObject(item)}')");
+
+                try
+                {
+                    //eventData
+                    //     .Context
+                    //     .Database
+                    //     .ExecuteSqlRaw("INSERT INTO outbox (Id,EventType,EventBody) VALUES (@Id,@EventType,@EventBody)", paramItems);
+
+                    dbcontext.Outbox.Attach(new OutBoxMessage
+                    {
+                        Id = item.Id,
+                        EventType = item.GetType().Name,
+                        EventBody = JsonConvert.SerializeObject(item)
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
-            eventData
-           .Context
-           .Database
-           .ExecuteSqlRaw(sb.ToString()); ;
             return base.SavedChanges(eventData, result);
         }
     }

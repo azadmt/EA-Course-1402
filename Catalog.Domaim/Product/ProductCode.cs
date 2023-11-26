@@ -2,11 +2,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Catalog.Domaim
+namespace Catalog.Domain
 {
     public class ProductCode : ValueObject
     {
+        private ProductCode()
+        { }
+
         public string Value { get; private set; }
+
         public ProductCode(string categoryCode, string countryCode)
         {
             if (string.IsNullOrEmpty(categoryCode))
@@ -20,8 +24,6 @@ namespace Catalog.Domaim
         protected override IEnumerable<object> GetEqualityAttribute()
         {
             yield return Value;
-
-
         }
     }
 }

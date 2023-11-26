@@ -1,5 +1,5 @@
-﻿using Catalog.Domaim;
-using Catalog.Domaim.Product;
+﻿using Catalog.Domain;
+using Catalog.Domain.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,27 +16,27 @@ namespace Catalog.Persistence.EF.Repository
         {
             this.uow = uow;
         }
+
         public ProductAggregate Get(ProductCode code)
         {
-            return uow.Products.SingleOrDefault(p => p.Code == code);
+            return uow.Products.SingleOrDefault(p => p.ProductCode == code);
         }
 
         public ProductAggregate Get(Guid id)
         {
-            return uow.Products.SingleOrDefault(p => p.Id==id);
-
+            return uow.Products.SingleOrDefault(p => p.Id == id);
         }
 
         public void Save(ProductAggregate product)
         {
             uow.Products.Add(product);
-            //uow.SaveChanges();
-
+            uow.SaveChanges();
         }
 
         public void Update(ProductAggregate product)
         {
-            throw new NotImplementedException();
+            uow.Products.Update(product);
+            uow.SaveChanges();
         }
     }
 }

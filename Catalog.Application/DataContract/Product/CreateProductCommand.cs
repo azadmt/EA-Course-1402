@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Application.DataContract
+namespace Catalog.Application.DataContract.Product
 {
     public class CreateProductCommand : ICommand
     {
@@ -16,17 +16,8 @@ namespace Catalog.Application.DataContract
 
         public CommandValidationResult Validate()
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ActiveProductCommand : ICommand
-    {
-        public Guid Id { get; set; }
-
-        public CommandValidationResult Validate()
-        {
-            throw new NotImplementedException();
+            //TODO implement validation
+            return CommandValidationResult.SuccessResult();
         }
     }
 }

@@ -1,7 +1,9 @@
 using Catalog.Application;
-using Catalog.Domaim;
-using Catalog.Domaim.Product;
-using Catalog.Domaim.ProductCategory;
+using Catalog.Application.DataContract.Product;
+using Catalog.Application.Product;
+using Catalog.Domain;
+using Catalog.Domain.Product;
+using Catalog.Domain.ProductCategory;
 
 namespace Catalog.Test
 {
@@ -17,33 +19,30 @@ namespace Catalog.Test
             var someCategoryId = Guid.NewGuid();
             var productRepo = new FakeProductRepository();
             productCategoryRepo.Save(new ProductCategoryAggregate(someCategoryId, someCategoryName, someCategoryCode));
-            var sut = new ProductService(productRepo, productCategoryRepo);
+            var sut = new CreateProductCommandHandler(productRepo, productCategoryRepo);
 
             //Act
-            var createProductDto = new Application.DataContract.CreateProductCommand
+            var createProductDto = new CreateProductCommand
             {
                 Category = someCategoryId,
                 CountryCode = "100",
                 Price = 5000,
                 ProductName = "someName"
-
             };
-            sut.CreateProductCatalog(createProductDto);
+            sut.Handle(createProductDto);
 
             //Assert
             var createdProduct = productRepo.Get(new ProductCode(someCategoryCode, createProductDto.CountryCode));
 
             Assert.True(createdProduct != null);
             Assert.True(createProductDto.Price == createdProduct.Price.Value);
-
         }
-
     }
-
 
     internal class FakeProductCategoryRepository : IProductCategoryRepository
     {
-        List<ProductCategoryAggregate> _db = new List<ProductCategoryAggregate>();
+        private List<ProductCategoryAggregate> _db = new List<ProductCategoryAggregate>();
+
         public ProductCategoryAggregate Get(Guid id)
         {
             return _db.Single(x => x.Id == id);
@@ -62,16 +61,16 @@ namespace Catalog.Test
 
     internal class FakeProductRepository : IProductRepository
     {
-        List<ProductAggregate> _db = new List<ProductAggregate>();
+        private List<ProductAggregate> _db = new List<ProductAggregate>();
+
         public ProductAggregate Get(ProductCode code)
         {
-            return _db.Single(x => x.Code.Value == code.Value);
+            return _db.Single(x => x.ProductCode.Value == code.Value);
         }
 
         public ProductAggregate Get(Guid id)
         {
             return _db.Single(x => x.Id == id);
-
         }
 
         public void Save(ProductAggregate product)

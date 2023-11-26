@@ -2,6 +2,9 @@
 {
     public abstract class Entity<TId>
     {
+        protected Entity()
+        { }
+
         public TId Id { get; private set; }
 
         public Entity(TId id)

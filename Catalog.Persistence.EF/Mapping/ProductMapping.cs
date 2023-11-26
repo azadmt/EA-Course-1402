@@ -1,4 +1,4 @@
-﻿using Catalog.Domaim;
+﻿using Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.Persistence.EF.Mapping
 {
-    internal class ProductMapping : IEntityTypeConfiguration<ProductAggregate>
+    internal class ProductAggregateMapping : IEntityTypeConfiguration<ProductAggregate>
     {
         public void Configure(EntityTypeBuilder<ProductAggregate> builder)
         {
@@ -23,7 +23,7 @@ namespace Catalog.Persistence.EF.Mapping
             builder.Property(p => p.CategoryId);
 
             builder.OwnsOne(p => p.Price);
-            builder.OwnsOne(p => p.Code);
+            builder.OwnsOne(p => p.ProductCode);
         }
     }
 }

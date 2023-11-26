@@ -1,15 +1,21 @@
-﻿using Framework.Domain;
+﻿using Framework.Core;
+using Framework.Domain;
 using System;
 
-namespace Catalog.Domaim
+namespace Catalog.Domain
 {
     public class ProductAggregate : AggregateRoot<Guid>
     {
-        public ProductAggregate(Guid id, Guid catId, Price price, ProductCode productCode) : base(id)
+        private ProductAggregate()
+        {
+        }
+
+        public ProductAggregate(Guid id, Guid categoryId, Price price, ProductCode productCode) : base(id)
         {
             Price = price;
-            Code = productCode;
-            CategoryId = catId;
+            ProductCode = productCode;
+            CategoryId = categoryId;
+            AddChanges(new ProductCreated(id, categoryId, price.Value, productCode.Value, IsActive));
         }
 
         public void Active()
@@ -24,7 +30,26 @@ namespace Catalog.Domaim
 
         public Guid CategoryId { get; private set; }
         public Price Price { get; private set; }
-        public ProductCode Code { get; private set; }
+        public ProductCode ProductCode { get; private set; }
+        public bool IsActive { get; private set; }
+    }
+
+    public class ProductCreated : DomainEvent
+    {
+        public Guid Id { get; private set; }
+        public Guid CategoryId { get; private set; }
+
+        public ProductCreated(Guid id, Guid categoryId, decimal price, string productCode, bool isActive)
+        {
+            Id = id;
+            CategoryId = categoryId;
+            Price = price;
+            ProductCode = productCode;
+            IsActive = isActive;
+        }
+
+        public decimal Price { get; private set; }
+        public string ProductCode { get; private set; }
         public bool IsActive { get; private set; }
     }
 }

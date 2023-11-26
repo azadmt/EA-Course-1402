@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace Framework.Domain
 {
-
     public abstract class ValueObject
     {
+        //protected ValueObject()
+        //{ }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
@@ -23,6 +26,7 @@ namespace Framework.Domain
             }
             return hash;
         }
+
         private bool IsEqual(ValueObject valueObject)
         {
             return GetEqualityAttribute().SequenceEqual(valueObject.GetEqualityAttribute());
@@ -34,12 +38,10 @@ namespace Framework.Domain
         }
 
         public static bool operator !=(ValueObject left, ValueObject right)
-        {           
+        {
             return !left.Equals(right);
         }
 
-
         protected abstract IEnumerable<object> GetEqualityAttribute();
-
     }
 }

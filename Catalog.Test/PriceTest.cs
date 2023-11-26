@@ -1,4 +1,4 @@
-﻿using Catalog.Domaim;
+﻿using Catalog.Domain;
 
 namespace Catalog.Test
 {

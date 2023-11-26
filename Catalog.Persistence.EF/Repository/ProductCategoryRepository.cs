@@ -1,4 +1,4 @@
-﻿using Catalog.Domaim.ProductCategory;
+﻿using Catalog.Domain.ProductCategory;
 using Framework.Core.Persistence;
 using System;
 using System.Collections.Generic;
@@ -10,25 +10,28 @@ namespace Catalog.Persistence.EF.Repository
 {
     public class ProductCategoryRepository : IProductCategoryRepository
     {
-        private readonly IUnitOfWork _uow;
+        private readonly ProductCatalogDbContext _dbcontext;
 
-        public ProductCategoryRepository(IUnitOfWork uow)
+        public ProductCategoryRepository(ProductCatalogDbContext uow)
         {
-            this._uow = uow;
+            this._dbcontext = uow;
         }
+
         public ProductCategoryAggregate Get(Guid id)
         {
-            throw new NotImplementedException();
+            return _dbcontext.ProductCategories.Single(c => c.Id == id);
         }
 
         public void Save(ProductCategoryAggregate productCategory)
         {
-            throw new NotImplementedException();
+            _dbcontext.ProductCategories.Add(productCategory);
+            _dbcontext.SaveChanges();
         }
 
         public void Update(ProductCategoryAggregate productCategory)
         {
-            throw new NotImplementedException();
+            _dbcontext.ProductCategories.Update(productCategory);
+            _dbcontext.SaveChanges();
         }
     }
 }

@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shippment", "Shippment", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagement", "OrderManagement", "{37333DA2-EE7A-4DD9-916E-245786883966}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domaim", "Catalog.Domaim\Catalog.Domaim.csproj", "{2723424A-0FDC-486E-9BCF-3FDB5395C8F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Catalog.Domaim\Catalog.Domain.csproj", "{2723424A-0FDC-486E-9BCF-3FDB5395C8F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Domain", "Framework.Domain\Framework.Domain.csproj", "{E43AEE49-79E4-4B94-91D2-F81B110A1A81}"
 EndProject

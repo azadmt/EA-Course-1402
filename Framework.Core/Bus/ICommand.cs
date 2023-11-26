@@ -7,9 +7,14 @@
 
     public class CommandValidationResult
     {
-        public CommandValidationResult(bool isValid, IList<string> errors)
+        public static CommandValidationResult SuccessResult()
         {
-            HasError = isValid;
+            return new CommandValidationResult(false, null);
+        }
+
+        public CommandValidationResult(bool hasError, IList<string> errors)
+        {
+            HasError = hasError;
             Errors = errors;
         }
 
@@ -17,7 +22,7 @@
         public IList<string> Errors { get; private set; } = new List<string>();
     }
 
-    public class OutBoxRecord
+    public class OutBoxMessage
     {
         public Guid Id { get; set; }
         public string EventType { get; set; }

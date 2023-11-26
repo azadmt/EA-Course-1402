@@ -3,7 +3,7 @@ using Framework.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace Catalog.Domaim
+namespace Catalog.Domain
 {
     public class Price : ValueObject
     {
@@ -12,7 +12,6 @@ namespace Catalog.Domaim
         public Price(decimal value)
         {
             Guard.Against.NegativeOrZero(value, "price value");
-
 
             Value = value;
         }

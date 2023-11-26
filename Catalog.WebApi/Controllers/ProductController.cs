@@ -1,5 +1,6 @@
 ﻿using Catalog.Application;
 using Catalog.Application.DataContract;
+using Catalog.Application.DataContract.Product;
 using Framework.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,7 @@ namespace Catalog.WebApi.Controllers
         [HttpPost("Active")]
         public IActionResult Active(Guid productId)
         {
-           // productService.ActiveProduct(productId);
+            // productService.ActiveProduct(productId);
             return Ok();
         }
     }
