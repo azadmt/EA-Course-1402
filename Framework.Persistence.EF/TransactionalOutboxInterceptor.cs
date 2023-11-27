@@ -34,23 +34,18 @@ namespace Framework.Persistence.EF
             var paramItems = new List<SqlParameter>();
             for (int i = 0; i < outbox.Count; i++)
             {
-                //paramItems[i] = new object[]
-                //    {
                 paramItems.Add(new SqlParameter($"@Id{i}", outbox[i].Id.ToString()));
                 paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().Name));
                 paramItems.Add(new SqlParameter($"@EventBody{i}", JsonConvert.SerializeObject(outbox[i])));
-                //  };
-                //  sb.Append($" ('{item.Id}','{item.GetType()}','{JsonConvert.SerializeObject(item)}')");
+
                 sb.AppendLine($" (@Id{i},@EventType{i},@EventBody{i}) ");
                 if (i != outbox.Count - 1)
                     sb.Append($" , ");
             }
 
-            eventData
-                 .Context
+            dbcontext
                      .Database
                      .ExecuteSqlRaw(sb.ToString(), paramItems.ToArray());
-            //    .ExecuteSqlRaw("INSERT INTO outbox (Id,EventType,EventBody) VALUES (@Id,@EventType,@EventBody)", paramItems);
 
             return base.SavedChanges(eventData, result);
         }
