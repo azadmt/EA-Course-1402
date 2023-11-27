@@ -30,15 +30,15 @@ namespace Framework.Persistence.EF
                        .ToList();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ");
+            sb.Append($"INSERT INTO outbox (EventId,EventType,EventBody) VALUES ");
             var paramItems = new List<SqlParameter>();
             for (int i = 0; i < outbox.Count; i++)
             {
-                paramItems.Add(new SqlParameter($"@Id{i}", outbox[i].Id.ToString()));
+                paramItems.Add(new SqlParameter($"@EventId{i}", outbox[i].Id.ToString()));
                 paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().Name));
                 paramItems.Add(new SqlParameter($"@EventBody{i}", JsonConvert.SerializeObject(outbox[i])));
 
-                sb.AppendLine($" (@Id{i},@EventType{i},@EventBody{i}) ");
+                sb.AppendLine($" (@EventId{i},@EventType{i},@EventBody{i}) ");
                 if (i != outbox.Count - 1)
                     sb.Append($" , ");
             }
@@ -48,6 +48,33 @@ namespace Framework.Persistence.EF
                      .ExecuteSqlRaw(sb.ToString(), paramItems.ToArray());
 
             return base.SavedChanges(eventData, result);
+        }
+    }
+
+    public static class OutboxUtil
+    {
+        public static void CreateTableIfNotExist()
+        {
+            var sql = @"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Outbox]') AND type in (N'U'))
+                    BEGIN
+                        SET ANSI_NULLS ON
+                        GO
+
+                        SET QUOTED_IDENTIFIER ON
+                        GO
+
+                        CREATE TABLE [dbo].[Outbox](
+	                        [Id] [bigint] IDENTITY(1,1) NOT NULL,
+	                        [EventType] [nvarchar](500) NOT NULL,
+	                        [EventBody] [nvarchar](max) NOT NULL,
+	                        [PublishedAt] [datetime] NULL,
+	                        [Created] [datetime] NOT NULL,
+	                        [EventId] [uniqueidentifier] NOT NULL
+                        ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+                        GO
+                       ALTER TABLE [dbo].[Outbox] ADD  CONSTRAINT [DF_Outbox_Created]  DEFAULT (getdate()) FOR [Created]
+
+                    END";
         }
     }
 }
