@@ -15,6 +15,7 @@ namespace Catalog.Domain.ProductCategory
             Name = name;
             Code = code;
             AddChanges(new ProductCategoryCreatedEvent(id, name, code));
+            AddChanges(new ProductCategoryCreatedEvent(id, name, code));
         }
 
         public string Name { get; private set; }

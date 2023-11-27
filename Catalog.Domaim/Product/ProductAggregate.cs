@@ -1,6 +1,7 @@
 ﻿using Framework.Core;
 using Framework.Domain;
 using System;
+using System.Diagnostics;
 
 namespace Catalog.Domain
 {
@@ -21,6 +22,7 @@ namespace Catalog.Domain
         public void Active()
         {
             IsActive = true;
+            AddChanges(new ProductActivated(Id));
         }
 
         public void DeActive()
@@ -32,6 +34,16 @@ namespace Catalog.Domain
         public Price Price { get; private set; }
         public ProductCode ProductCode { get; private set; }
         public bool IsActive { get; private set; }
+    }
+
+    public class ProductActivated : DomainEvent
+    {
+        public ProductActivated(Guid productId)
+        {
+            ProductId = productId;
+        }
+
+        public Guid ProductId { get; }
     }
 
     public class ProductCreated : DomainEvent

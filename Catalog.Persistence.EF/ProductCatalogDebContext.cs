@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Persistence.EF
 {
-    public class ProductCatalogDbContext : OutboxSupportApplicationDbContext
+    public class ProductCatalogDbContext : ApplicationDbContext
     {
         public ProductCatalogDbContext(DbContextOptions options) : base(options)
         {

@@ -17,7 +17,7 @@ namespace Framework.Persistence.EF
     {
         public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
         {
-            var dbcontext = (eventData.Context as OutboxSupportApplicationDbContext);
+            var dbcontext = (eventData.Context as ApplicationDbContext);
             var outbox = dbcontext
                    .ChangeTracker
                    .Entries<IAggregateRoot>()
@@ -30,36 +30,28 @@ namespace Framework.Persistence.EF
                        .ToList();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append($" (@Id,@EventType,@EventBody)");
-            foreach (var item in outbox)
+            sb.Append($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ");
+            var paramItems = new List<SqlParameter>();
+            for (int i = 0; i < outbox.Count; i++)
             {
-                object[] paramItems = new object[]
-                    {
-                        new SqlParameter("@Id", item.Id.ToString()),
-                        new SqlParameter("@EventType", item.GetType().Name),
-                        new SqlParameter("@EventBody", JsonConvert.SerializeObject(item)),
-                    };
-                //  sb.Append($"INSERT INTO outbox (Id,EventType,EventBody) VALUES ('{item.Id}','{item.GetType()}','{JsonConvert.SerializeObject(item)}')");
-
-                try
-                {
-                    //eventData
-                    //     .Context
-                    //     .Database
-                    //     .ExecuteSqlRaw("INSERT INTO outbox (Id,EventType,EventBody) VALUES (@Id,@EventType,@EventBody)", paramItems);
-
-                    dbcontext.Outbox.Attach(new OutBoxMessage
-                    {
-                        Id = item.Id,
-                        EventType = item.GetType().Name,
-                        EventBody = JsonConvert.SerializeObject(item)
-                    });
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                //paramItems[i] = new object[]
+                //    {
+                paramItems.Add(new SqlParameter($"@Id{i}", outbox[i].Id.ToString()));
+                paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().Name));
+                paramItems.Add(new SqlParameter($"@EventBody{i}", JsonConvert.SerializeObject(outbox[i])));
+                //  };
+                //  sb.Append($" ('{item.Id}','{item.GetType()}','{JsonConvert.SerializeObject(item)}')");
+                sb.AppendLine($" (@Id{i},@EventType{i},@EventBody{i}) ");
+                if (i != outbox.Count - 1)
+                    sb.Append($" , ");
             }
+
+            eventData
+                 .Context
+                     .Database
+                     .ExecuteSqlRaw(sb.ToString(), paramItems.ToArray());
+            //    .ExecuteSqlRaw("INSERT INTO outbox (Id,EventType,EventBody) VALUES (@Id,@EventType,@EventBody)", paramItems);
+
             return base.SavedChanges(eventData, result);
         }
     }
