@@ -45,13 +45,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{263C5C70-3F0E-4FE3-B429-236623465646}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Api", "OrderManagement.Api\OrderManagement.Api.csproj", "{883B4C35-9908-462F-A345-F068545239B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Api", "OrderManagement.Api\OrderManagement.Api.csproj", "{883B4C35-9908-462F-A345-F068545239B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Persistence.EF", "OrderManagement.Persistence.EF\OrderManagement.Persistence.EF.csproj", "{5EC7BCF2-B8FF-4657-9889-9AEE54FA9C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Persistence.EF", "OrderManagement.Persistence.EF\OrderManagement.Persistence.EF.csproj", "{5EC7BCF2-B8FF-4657-9889-9AEE54FA9C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Application", "OrderManagement.Application\OrderManagement.Application.csproj", "{9CF211FB-FDF8-4176-A27E-31FF87D01A97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Application", "OrderManagement.Application\OrderManagement.Application.csproj", "{9CF211FB-FDF8-4176-A27E-31FF87D01A97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Domain", "OrderManagement.Domain\OrderManagement.Domain.csproj", "{3814A2DC-10CD-47D7-AFED-CFCB6A76A070}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Domain", "OrderManagement.Domain\OrderManagement.Domain.csproj", "{3814A2DC-10CD-47D7-AFED-CFCB6A76A070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.OutboxEventPublisher", "Framework.OutboxEventPublisher\Framework.OutboxEventPublisher.csproj", "{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Bus.MassTransit", "Framework.Bus.MassTransit\Framework.Bus.MassTransit.csproj", "{E26EA697-3D12-41D4-BB58-7D4E99F9A908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +111,14 @@ Global
 		{3814A2DC-10CD-47D7-AFED-CFCB6A76A070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3814A2DC-10CD-47D7-AFED-CFCB6A76A070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3814A2DC-10CD-47D7-AFED-CFCB6A76A070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26EA697-3D12-41D4-BB58-7D4E99F9A908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26EA697-3D12-41D4-BB58-7D4E99F9A908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26EA697-3D12-41D4-BB58-7D4E99F9A908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26EA697-3D12-41D4-BB58-7D4E99F9A908}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +148,8 @@ Global
 		{5EC7BCF2-B8FF-4657-9889-9AEE54FA9C6A} = {4D30AA81-8E66-466D-85CA-97AF401CB073}
 		{9CF211FB-FDF8-4176-A27E-31FF87D01A97} = {37333DA2-EE7A-4DD9-916E-245786883966}
 		{3814A2DC-10CD-47D7-AFED-CFCB6A76A070} = {37333DA2-EE7A-4DD9-916E-245786883966}
+		{52EC5CEF-B50E-4E14-B52F-8D5DDC880AE8} = {220A26AE-0115-4495-B37F-87E7D7E83743}
+		{E26EA697-3D12-41D4-BB58-7D4E99F9A908} = {220A26AE-0115-4495-B37F-87E7D7E83743}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1099A149-A245-44D9-BDA5-46C95DA7598D}

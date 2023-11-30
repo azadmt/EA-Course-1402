@@ -5,6 +5,8 @@
         CommandValidationResult Validate();
     }
 
+
+
     public class CommandValidationResult
     {
         public static CommandValidationResult SuccessResult()
