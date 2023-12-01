@@ -6,10 +6,11 @@ using Catalog.Domaim.Product;
 using Catalog.Domaim.ProductCategory;
 using Catalog.Persistence.EF;
 using Catalog.Persistence.EF.Repository;
+using Framework.Bus.MassTransit;
 using Framework.Core;
 using Framework.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
-
+using MassTransit;
 namespace Catalog.WebApi
 {
     public class Program
@@ -26,13 +27,22 @@ namespace Catalog.WebApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICommandHandler<CreateProductCommand>, CreateProductCommandHandler>();
             builder.Services.AddScoped<ICommandHandler<CreateProductCategoryCommand>, ProductCategoryCommandHandler>();
-            builder.Services.AddScoped<ICommandBus, Bus>();
+            builder.Services.AddScoped<ICommandBus, Framework.Core.Bus>();
+            builder.Services.AddScoped<IEventBus, MassTransitBusImp>();
             builder.Services.AddScoped<IProductRepository, ProductAggregateRepository>();
             builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             builder.Services.AddScoped<IUnitOfWork, ProductCatalogDbContext>();
-            
+
+            builder.Services.AddMassTransit(x =>
+            {
+                // A Transport
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                });
+            });
+
             builder.Services
-                .AddDbContext<ProductCatalogDbContext>(x=> 
+                .AddDbContext<ProductCatalogDbContext>(x =>
                 x
                 .UseSqlServer(builder.Configuration.GetConnectionString("default")));
 

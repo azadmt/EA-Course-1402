@@ -4,4 +4,9 @@
     {
         void Send<TCommand>(TCommand command) where TCommand : ICommand;
     }
+
+    public interface IEventBus
+    {
+        void Publish<TEvent>(TEvent @event);
+    }
 }

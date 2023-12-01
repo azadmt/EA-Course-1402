@@ -1,4 +1,7 @@
-﻿namespace Framework.Domain
+﻿using System;
+using System.Collections.Generic;
+
+namespace Framework.Domain
 {
     public abstract class Entity<TId>
     {
@@ -25,5 +28,25 @@
             return Id.GetHashCode();
         }
 
+    }
+
+    public interface IAggregateRoot
+    {
+        IReadOnlyCollection<DomainEvent> GetChanges();
+    }
+
+    public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot
+    {
+        protected List<DomainEvent> _changes=new();
+
+        protected AggregateRoot() { }
+        public AggregateRoot(TKey id):base(id)
+        {
+
+        }
+        public IReadOnlyCollection<DomainEvent> GetChanges()
+        {
+            return _changes.AsReadOnly();
+        }
     }
 }
