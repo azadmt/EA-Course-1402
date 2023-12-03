@@ -1,9 +1,10 @@
 ﻿using Framework.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Data.SqlClient;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.Data.SqlClient;
+
 namespace Framework.Persistence.EF
 {
     public class OutboxInterceptor : SaveChangesInterceptor
@@ -11,6 +12,7 @@ namespace Framework.Persistence.EF
         public OutboxInterceptor()
         {
         }
+
         public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
         {
             var outbox = eventData.Context.ChangeTracker
@@ -33,11 +35,9 @@ namespace Framework.Persistence.EF
 
             eventData.Context
                      .Database
-                     .ExecuteSqlRaw("INSERT INTO outbox (EventId,EventType,EventBody) VALUES (@EventId{0},@EventType{0},@EventBody{0})", paramItems);
-                    // .ExecuteSqlRaw(sb.ToString(), paramItems);
+                     .ExecuteSqlRaw(sb.ToString(), paramItems);
 
             return base.SavedChanges(eventData, result);
         }
-
     }
 }
