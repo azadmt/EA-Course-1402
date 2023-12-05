@@ -11,6 +11,9 @@ using Catalog.Persistence.EF.Repository;
 using Framework.Core;
 using Framework.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
+using MassTransit;
+using Framework.Bus.MassTransit;
+using Catalog.Domain.Contract;
 
 namespace Catalog.WebApi
 {
@@ -29,7 +32,8 @@ namespace Catalog.WebApi
             //TODO Implement Auto register command handlers
             builder.Services.AddScoped<ICommandHandler<CreateProductCommand>, CreateProductCommandHandler>();
             builder.Services.AddScoped<ICommandHandler<CreateProductCategoryCommand>, ProductCategoryCommandHandler>();
-            builder.Services.AddScoped<ICommandBus, Bus>();
+            builder.Services.AddScoped<ICommandBus, Framework.Core.Bus>();
+            builder.Services.AddScoped<IEventBus, MasstransitBus>();
             builder.Services.AddScoped<IProductRepository, ProductAggregateRepository>();
             builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             builder.Services.AddScoped<IUnitOfWork, ProductCatalogDbContext>();
@@ -38,6 +42,19 @@ namespace Catalog.WebApi
                 // .AddDbContext<ProductCatalogDbContext>(opt => opt.UseInMemoryDatabase(nameof(ProductCatalogDbContext)))
 
                 ;
+            builder.Services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "ea", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                });
+            });
+
+            //  builder.Services.AddMassTransitHostedService();
 
             var app = builder.Build();
 

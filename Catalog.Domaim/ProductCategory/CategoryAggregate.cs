@@ -1,4 +1,5 @@
-﻿using Framework.Core;
+﻿using Catalog.Domain.Contract;
+using Framework.Core;
 using Framework.Domain;
 using System;
 using System.Collections.Generic;
@@ -15,24 +16,9 @@ namespace Catalog.Domain.ProductCategory
             Name = name;
             Code = code;
             AddChanges(new ProductCategoryCreatedEvent(id, name, code));
-            AddChanges(new ProductCategoryCreatedEvent(id, name, code));
         }
 
         public string Name { get; private set; }
         public string Code { get; private set; }
-    }
-
-    public class ProductCategoryCreatedEvent : DomainEvent
-    {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Code { get; private set; }
-
-        public ProductCategoryCreatedEvent(Guid id, string name, string code)
-        {
-            Id = id;
-            Name = name;
-            Code = code;
-        }
     }
 }
