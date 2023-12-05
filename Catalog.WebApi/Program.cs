@@ -11,6 +11,7 @@ using Framework.Core;
 using Framework.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
+
 namespace Catalog.WebApi
 {
     public class Program
@@ -35,12 +36,17 @@ namespace Catalog.WebApi
 
             builder.Services.AddMassTransit(x =>
             {
-                // A Transport
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.Host("localhost", "EA-Course", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
                 });
             });
 
+            builder.Services.AddMassTransitHostedService();
             builder.Services
                 .AddDbContext<ProductCatalogDbContext>(x =>
                 x
@@ -56,7 +62,6 @@ namespace Catalog.WebApi
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

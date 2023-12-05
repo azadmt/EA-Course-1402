@@ -8,5 +8,7 @@
     public interface IEventBus
     {
         void Publish<TEvent>(TEvent @event);
+
+        Task PublishAsync<TEvent>(TEvent @event);
     }
 }
