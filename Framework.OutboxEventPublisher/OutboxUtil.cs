@@ -1,38 +1,45 @@
-﻿using System.Data;
-using Dapper;
+﻿using Framework.Core;
+using Newtonsoft.Json;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Reflection;
 
 namespace Framework.OutboxEventPublisher
 {
-    public class Publisher
+    public class OutboxManager
     {
-        public Publisher()
-        { }
+        private readonly IDbConnection _dbConnection;
+        private readonly IEventBus _eventBus;
 
-        public void PublishOutboxItems()
+        public OutboxManager(IDbConnection dbConnectionm, IEventBus eventBus)
         {
-            //  using connection=new SqlConnection
-        }
-    }
-
-    public static class OutboxUtil
-    {
-        public static List<OutboxItem> GetOutboxes(this IDbConnection dbConnection)
-        {
-            return dbConnection.Query<OutboxItem>("SELECT * FROM Outbox Where PublishedAt IS NULL").ToList();
+            _dbConnection = dbConnectionm;
+            _eventBus = eventBus;
         }
 
-        public static void UpdatePublishedDate(this IDbConnection dbConnection, IEnumerable<long> ItemsId)
+        public void Start(Assembly[] eventAssemblies)
         {
-            dbConnection.Execute("UPDATE Outbox Set PaublishedAt=@publishedAt Where Id @ids",
-                  param: new { publishedAt = DateTime.Now, ids = ItemsId });
+            var notSyncedOutbox = _dbConnection.GetOutboxes();
+            if (notSyncedOutbox != null)
+            {
+                foreach (var item in notSyncedOutbox)
+                {
+                    _eventBus.Publish(ToEvent(item));
+                    Console.WriteLine($"Publish Outbox :{item.EventBody}");
+                }
+                _dbConnection.UpdatePublishedDate(notSyncedOutbox.Select(x => x.Id));
+            }
         }
-    }
 
-    public class OutboxItem
-    {
-        public string EventType { get; set; }
-        public string EventBody { get; set; }
-        public Guid EventId { get; set; }
-        public long Id { get; set; }
+        private object ToEvent(OutboxItem outboxItem)
+        {
+            Type type = Type.GetType(outboxItem.EventType);
+            var @event = JsonConvert.DeserializeObject(outboxItem.EventBody, type, new JsonSerializerSettings
+            {
+                ContractResolver = new NonPublicPropertiesResolver()
+            });
+            return @event;
+        }
     }
 }

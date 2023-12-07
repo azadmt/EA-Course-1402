@@ -7,6 +7,7 @@ namespace Catalog.ReadModel.Api.EventHandler
     {
         public async Task Consume(ConsumeContext<ProductCategoryCreatedEvent> context)
         {
+            Console.WriteLine($"Handle message :{context.Message.ProductCategoryId} - {context.Message.Code}");
         }
     }
 }
