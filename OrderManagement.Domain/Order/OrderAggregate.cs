@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Framework.Domain;
+using OrderManagement.Domain.Contract;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,17 +17,28 @@ namespace OrderManagement.Domain.Order
         {
         }
 
-        private OrderAggregate(Guid id, Guid customerId, List<OrderItem> orderItems) : base(id)
+        private OrderAggregate(Guid id, Guid customerId) : base(id)
         {
             CustomerId = customerId;
-            _orderItems = orderItems;
+            AddChanges(new OrderCreatedEvent(id));
         }
 
         public static OrderAggregate CreateOrder(Guid id, Guid customerId, List<OrderItem> orderItems)
         {
             Guard.Against.NullOrEmpty(orderItems, nameof(orderItems));
 
-            return new OrderAggregate(id, customerId, orderItems);
+            var order = new OrderAggregate(id, customerId);
+
+            foreach (var item in orderItems)
+            {
+                order.AddOrderItem(item);
+            }
+            return order;
+        }
+
+        public void AddOrderItem(OrderItem orderItem)
+        {
+            _orderItems.Add(orderItem);
         }
 
         private List<OrderItem> _orderItems;

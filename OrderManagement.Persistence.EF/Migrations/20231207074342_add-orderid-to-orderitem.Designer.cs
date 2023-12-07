@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderManagement.Persistence.EF;
 
@@ -11,9 +12,10 @@ using OrderManagement.Persistence.EF;
 namespace OrderManagement.Persistence.EF.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    partial class OrderManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231207074342_add-orderid-to-orderitem")]
+    partial class addorderidtoorderitem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,13 +70,11 @@ namespace OrderManagement.Persistence.EF.Migrations
 
             modelBuilder.Entity("OrderManagement.Domain.Order.OrderItem", b =>
                 {
-                    b.HasOne("OrderManagement.Domain.Order.OrderAggregate", "Order")
+                    b.HasOne("OrderManagement.Domain.Order.OrderAggregate", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("OrderManagement.Domain.Order.OrderAggregate", b =>

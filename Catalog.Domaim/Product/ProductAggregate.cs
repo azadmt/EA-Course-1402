@@ -1,4 +1,5 @@
-﻿using Framework.Core;
+﻿using Catalog.Domain.Contract;
+using Framework.Core;
 using Framework.Domain;
 using System;
 using System.Diagnostics;
@@ -33,35 +34,6 @@ namespace Catalog.Domain
         public Guid CategoryId { get; private set; }
         public Price Price { get; private set; }
         public ProductCode ProductCode { get; private set; }
-        public bool IsActive { get; private set; }
-    }
-
-    public class ProductActivated : DomainEvent
-    {
-        public ProductActivated(Guid productId)
-        {
-            ProductId = productId;
-        }
-
-        public Guid ProductId { get; }
-    }
-
-    public class ProductCreated : DomainEvent
-    {
-        public Guid Id { get; private set; }
-        public Guid CategoryId { get; private set; }
-
-        public ProductCreated(Guid id, Guid categoryId, decimal price, string productCode, bool isActive)
-        {
-            Id = id;
-            CategoryId = categoryId;
-            Price = price;
-            ProductCode = productCode;
-            IsActive = isActive;
-        }
-
-        public decimal Price { get; private set; }
-        public string ProductCode { get; private set; }
         public bool IsActive { get; private set; }
     }
 }

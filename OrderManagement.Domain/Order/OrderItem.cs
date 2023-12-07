@@ -21,6 +21,8 @@ namespace OrderManagement.Domain.Order
         }
 
         public Guid ProductId { get; private set; }
+        public Guid OrderId { get; private set; }
+        public OrderAggregate Order { get; private set; }
         public int Quantity { get; private set; }
         public decimal Price { get; private set; }
     }

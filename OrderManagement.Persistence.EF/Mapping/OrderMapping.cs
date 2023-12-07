@@ -20,8 +20,8 @@ namespace OrderManagement.Persistence.EF.Mapping
             builder.Property(p => p.CustomerId);
 
             builder.HasMany(p => p.OrderItems)
-                .WithOne()
-                .HasForeignKey("OrderAggregateId")
+                .WithOne(x => x.Order)
+                .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
