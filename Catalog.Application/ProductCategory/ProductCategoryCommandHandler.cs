@@ -23,11 +23,7 @@ namespace Catalog.Application.ProductCategory
         public void Handle(CreateProductCategoryCommand command)
         {
             var pg = new ProductCategoryAggregate(Guid.NewGuid(), command.Name, command.Code);
-            productCategoryRepository.Save(pg);
-            foreach (var item in pg.GetChanges())
-            {
-                eventBus.PublishAsync(item).GetAwaiter().GetResult();//Move to Message Broker
-            }
+            productCategoryRepository.Save(pg);      
         }
     }
 }

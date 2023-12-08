@@ -38,7 +38,7 @@ namespace Catalog.WebApi
             {
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("localhost", "EA-Course", h =>
+                    cfg.Host("localhost", "/", h =>
                     {
                         h.Username("guest");
                         h.Password("guest");

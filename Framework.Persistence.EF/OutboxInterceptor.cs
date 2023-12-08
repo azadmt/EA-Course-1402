@@ -25,7 +25,7 @@ namespace Framework.Persistence.EF
             for (int i = 0; i < outbox.Count; i++)
             {
                 paramItems.Add(new SqlParameter($"@EventId{i}", outbox[i].Id.ToString()));
-                paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().Name));
+                paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().AssemblyQualifiedName));
                 paramItems.Add(new SqlParameter($"@EventBody{i}", JsonConvert.SerializeObject(outbox[i])));
 
                 sb.AppendLine($" (@EventId{i},@EventType{i},@EventBody{i}) ");
@@ -38,6 +38,7 @@ namespace Framework.Persistence.EF
                      .ExecuteSqlRaw(sb.ToString(), paramItems);
 
             return base.SavedChanges(eventData, result);
+            //
         }
     }
 }

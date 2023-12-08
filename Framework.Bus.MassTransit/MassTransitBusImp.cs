@@ -5,9 +5,9 @@ namespace Framework.Bus.MassTransit
 {
     public class MassTransitBusImp : IEventBus
     {
-        private readonly IPublishEndpoint bus;
+        private readonly IBusControl bus;
 
-        public MassTransitBusImp(IPublishEndpoint bus)
+        public MassTransitBusImp(IBusControl bus)
         {
             this.bus = bus;
         }

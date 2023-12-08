@@ -1,4 +1,5 @@
-﻿using Framework.Domain;
+﻿using Catalog.Domain.Contract;
+using Framework.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Catalog.Domaim.ProductCategory
         {
             Name = name;
             Code = code;
-            _changes.Add(new ProductCategoryCreatedEvent(Name, Code));
+            _changes.Add(new ProductCategoryCreatedEvent(id, Name, Code));
         }
 
         public string Name { get; private set; }

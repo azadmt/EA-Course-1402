@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Catalog.Outbox.Publisher-FE3DF991-AEC8-49ED-BEF6-AF566FA2C7FD</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.24" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Catalog.Domain.Contract\Catalog.Domain.Contract.csproj" />
+    <ProjectReference Include="..\Framework.Bus.MassTransit\Framework.Bus.MassTransit.csproj" />
+    <ProjectReference Include="..\Framework.OutboxPublisher\Framework.OutboxPublisher.csproj" />
+  </ItemGroup>
+</Project>
