@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Framework.Domain;
 using OrderManagement.Domain.Contract;
+using OrderManagement.Domain.Order.Exception;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,6 +39,9 @@ namespace OrderManagement.Domain.Order
 
         public void AddOrderItem(OrderItem orderItem)
         {
+            if (_orderItems.Select(x => x.Price).Sum() > 10000000)
+                throw new OutOfOrderCapacityException();
+
             _orderItems.Add(orderItem);
         }
 
