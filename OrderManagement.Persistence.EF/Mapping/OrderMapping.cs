@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OrderManagement.Domain.Order;
 
 namespace OrderManagement.Persistence.EF.Mapping
@@ -22,7 +17,14 @@ namespace OrderManagement.Persistence.EF.Mapping
             builder.HasMany(p => p.OrderItems)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.Cascade)
+                .Metadata
+                .PrincipalToDependent
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            builder.Metadata.FindNavigation(nameof(OrderAggregate.OrderItems))
+             .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

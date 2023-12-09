@@ -1,4 +1,5 @@
 ﻿using Framework.Core;
+using OrderManagement.Domain.Contract.Dto;
 
 namespace OrderManagement.Application
 {
@@ -22,12 +23,5 @@ namespace OrderManagement.Application
         {
             return CommandValidationResult.SuccessResult();
         }
-    }
-
-    public class OrderItemDto
-    {
-        public Guid ProductId { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
     }
 }

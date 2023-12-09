@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Framework.Domain;
 using OrderManagement.Domain.Contract;
+using OrderManagement.Domain.Contract.Dto;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,30 +21,29 @@ namespace OrderManagement.Domain.Order
         private OrderAggregate(Guid id, Guid customerId) : base(id)
         {
             CustomerId = customerId;
-            AddChanges(new OrderCreatedEvent(id));
         }
 
-        public static OrderAggregate CreateOrder(Guid id, Guid customerId, List<OrderItem> orderItems)
+        public static OrderAggregate CreateOrder(Guid id, Guid customerId, List<OrderItemDto> orderItems)
         {
-            Guard.Against.NullOrEmpty(orderItems, nameof(orderItems));
-
             var order = new OrderAggregate(id, customerId);
-
             foreach (var item in orderItems)
             {
-                order.AddOrderItem(item);
+                order.AddOrderItem(item.ProductId, item.Quantity, item.UnitPrice);
             }
+            order.AddChanges(new OrderCreatedEvent(id, orderItems));
             return order;
         }
 
-        public void AddOrderItem(OrderItem orderItem)
+        public void AddOrderItem(Guid productId, int quantity, decimal unitPrice)
         {
-            _orderItems.Add(orderItem);
+            _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), Id, productId, quantity, unitPrice));
         }
 
-        private List<OrderItem> _orderItems;
+        //private List<OrderItem> _orderItems;
+        protected List<OrderItem> _orderItems = new List<OrderItem>();
 
-        public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
+        // public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
+        public IEnumerable<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
         public DateTime OrderDate { get; private set; }
         public decimal TotalPrice { get; private set; }

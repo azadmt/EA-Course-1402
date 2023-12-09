@@ -1,4 +1,5 @@
 ﻿using Framework.Core;
+using Framework.Core.Domain;
 using OrderManagement.Domain.Order;
 
 namespace OrderManagement.Application
@@ -6,40 +7,19 @@ namespace OrderManagement.Application
     public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IGuidProvider _guidProvider;
 
-        public CreateOrderCommandHandler(IOrderRepository orderRepository)
+        public CreateOrderCommandHandler(IOrderRepository orderRepository, IGuidProvider guidProvider)
         {
             _orderRepository = orderRepository;
+            _guidProvider = guidProvider;
         }
 
         public void Handle(CreateOrderCommand command)
         {
-            var orderItems = new List<OrderItem>();
-            foreach (var item in command.Items)
-            {
-                orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), item.ProductId, item.Quantity, item.UnitPrice));
-            }
-            _orderRepository.Save(OrderAggregate.CreateOrder(Guid.NewGuid(), command.CustomerId, orderItems));
-        }
-    }
+            var order = OrderAggregate.CreateOrder(_guidProvider.NewGuid(), command.CustomerId, command.Items);
 
-    public class AddNewItemsToOrderCommandHandler : ICommandHandler<AddNewItemsToOrderCommand>
-    {
-        private readonly IOrderRepository _orderRepository;
-
-        public AddNewItemsToOrderCommandHandler(IOrderRepository orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
-
-        public void Handle(AddNewItemsToOrderCommand command)
-        {
-            var order = _orderRepository.Get(command.OrderId);
-            foreach (var item in command.Items)
-            {
-                order.AddOrderItem(OrderItem.CreateOrderItem(Guid.NewGuid(), item.ProductId, item.Quantity, item.UnitPrice));
-            }
-            _orderRepository.Update(order);
+            _orderRepository.Save(order);
         }
     }
 }

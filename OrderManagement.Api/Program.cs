@@ -6,6 +6,7 @@ using OrderManagement.Application;
 using OrderManagement.Domain.Order;
 using OrderManagement.Persistence.EF.Repository;
 using MassTransit;
+using Framework.Core.Domain;
 
 namespace OrderManagement.Api
 {
@@ -26,6 +27,7 @@ namespace OrderManagement.Api
             builder.Services.AddScoped<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
             builder.Services.AddScoped<ICommandHandler<AddNewItemsToOrderCommand>, AddNewItemsToOrderCommandHandler>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IGuidProvider, GuidProvider>();
 
             builder.Services.AddScoped<ICommandBus, Framework.Core.Bus>();
             builder.Services.AddSingleton<IEventBus, Framework.Bus.MassTransit.MasstransitBus>();

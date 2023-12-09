@@ -8,16 +8,18 @@ namespace OrderManagement.Domain.Order
         {
         }
 
-        private OrderItem(Guid id, Guid productId, int quantity, decimal price) : base(id)
+        private OrderItem(Guid id) : base(id)
         {
-            ProductId = productId;
-            Price = price;
-            Quantity = quantity;
         }
 
-        public static OrderItem CreateOrderItem(Guid id, Guid productId, int quantity, decimal price)
+        public static OrderItem CreateOrderItem(Guid id, Guid orderId, Guid productId, int quantity, decimal price)
         {
-            return new OrderItem(id, productId, quantity, price);
+            var orerItem = new OrderItem(id);
+            orerItem.OrderId = orderId;
+            orerItem.ProductId = productId;
+            orerItem.Quantity = quantity;
+            orerItem.Price = price;
+            return orerItem;
         }
 
         public Guid ProductId { get; private set; }

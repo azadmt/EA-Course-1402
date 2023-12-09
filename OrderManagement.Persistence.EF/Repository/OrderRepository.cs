@@ -31,14 +31,14 @@ namespace OrderManagement.Persistence.EF.Repository
 
         public void Update(OrderAggregate aggregate)
         {
-            _uow.Entry(aggregate).State = EntityState.Detached;
-            foreach (var item in aggregate.OrderItems)
-                _uow.Entry(item).State = EntityState.Detached;
-            var entry = _uow.Attach(aggregate);
+            //_uow.Entry(aggregate).State = EntityState.Detached;
+            //foreach (var item in aggregate.OrderItems)
+            //    _uow.Entry(item).State = EntityState.Detached;
+            //var entry = _uow.Attach(aggregate);
 
-            _uow.Attach(aggregate);
+            //_uow.Attach(aggregate);
 
-            //  _uow.Orders.Update(aggregate);
+            _uow.Orders.Update(aggregate);
             _uow.SaveChanges();
         }
     }
