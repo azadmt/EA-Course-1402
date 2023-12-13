@@ -14,17 +14,26 @@ namespace OrderManagement.Persistence.EF.Mapping
             builder.Property(p => p.TotalPrice);
             builder.Property(p => p.CustomerId);
 
-            builder.HasMany(p => p.OrderItems)
-                .WithOne(x => x.Order)
-                .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .OnDelete(DeleteBehavior.Cascade)
-                .Metadata
-                .PrincipalToDependent
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.OwnsMany(x => x.OrderItems, oi =>
+            {
+                oi.ToTable("OrderItems").HasKey(x => x.Id);
+                oi.Property(p => p.Id).IsRequired().ValueGeneratedNever();
+                oi.WithOwner().HasForeignKey("OrderId");
+                oi.Property(x => x.ProductId);
+                oi.Property(x => x.Quantity);
+                oi.Property(x => x.Quantity);
+            });
 
             builder.Metadata.FindNavigation(nameof(OrderAggregate.OrderItems))
              .SetPropertyAccessMode(PropertyAccessMode.Field);
+            //builder.HasMany(p => p.OrderItems)
+            //    .WithOne(x => x.Order)
+            //    .HasForeignKey(x => x.OrderId)
+            //    .OnDelete(DeleteBehavior.Cascade)
+            //    .OnDelete(DeleteBehavior.Cascade)
+            //    .Metadata
+            //    .PrincipalToDependent
+            //    .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

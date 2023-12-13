@@ -7,6 +7,7 @@ using OrderManagement.Domain.Order;
 using OrderManagement.Persistence.EF.Repository;
 using MassTransit;
 using Framework.Core.Domain;
+using Scrutor;
 
 namespace OrderManagement.Api
 {
@@ -24,11 +25,19 @@ namespace OrderManagement.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
-            builder.Services.AddScoped<ICommandHandler<AddNewItemsToOrderCommand>, AddNewItemsToOrderCommandHandler>();
+            //builder.Services.AddScoped<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
+            //builder.Services.AddScoped<ICommandHandler<AddNewItemsToOrderCommand>, AddNewItemsToOrderCommandHandler>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IGuidProvider, GuidProvider>();
 
+            builder.Services.Scan(scan => scan
+            .FromAssemblies(typeof(CreateOrderCommandHandler).Assembly)
+            .AddClasses(classes =>
+                classes.AssignableTo(typeof(ICommandHandler<>))
+                    .Where(c => !c.IsAbstract && !c.IsGenericTypeDefinition))
+            .AsSelfWithInterfaces()
+            .WithLifetime(ServiceLifetime.Scoped)
+        );
             builder.Services.AddScoped<ICommandBus, Framework.Core.Bus>();
             builder.Services.AddSingleton<IEventBus, Framework.Bus.MassTransit.MasstransitBus>();
 

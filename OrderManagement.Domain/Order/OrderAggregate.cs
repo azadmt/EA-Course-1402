@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Framework.Domain;
 using OrderManagement.Domain.Contract;
+using OrderManagement.Domain.Order.Exception;
 using OrderManagement.Domain.Contract.Dto;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,13 @@ namespace OrderManagement.Domain.Order
             _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), Id, productId, quantity, unitPrice));
         }
 
-        //private List<OrderItem> _orderItems;
+        public void RemoveItem(Guid[] orderItemIds)
+        {
+            _orderItems.RemoveAll(x => orderItemIds.Contains(x.Id));
+        }
+
         protected List<OrderItem> _orderItems = new List<OrderItem>();
 
-        // public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
         public IEnumerable<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
         public DateTime OrderDate { get; private set; }

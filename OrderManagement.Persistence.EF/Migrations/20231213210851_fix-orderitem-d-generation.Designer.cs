@@ -12,8 +12,8 @@ using OrderManagement.Persistence.EF;
 namespace OrderManagement.Persistence.EF.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    [Migration("20231129214646_init")]
-    partial class init
+    [Migration("20231213210851_fix-orderitem-d-generation")]
+    partial class fixorderitemdgeneration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,41 +43,35 @@ namespace OrderManagement.Persistence.EF.Migrations
                     b.ToTable("Orders", (string)null);
                 });
 
-            modelBuilder.Entity("OrderManagement.Domain.Order.OrderItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("OrderAggregateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderAggregateId");
-
-                    b.ToTable("OrderItem");
-                });
-
-            modelBuilder.Entity("OrderManagement.Domain.Order.OrderItem", b =>
-                {
-                    b.HasOne("OrderManagement.Domain.Order.OrderAggregate", null)
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderAggregateId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("OrderManagement.Domain.Order.OrderAggregate", b =>
                 {
+                    b.OwnsMany("OrderManagement.Domain.Order.OrderItem", "OrderItems", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<decimal>("Price")
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("OrderItems", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
                     b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618

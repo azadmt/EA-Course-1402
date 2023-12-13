@@ -22,4 +22,23 @@ namespace OrderManagement.Application
             _orderRepository.Update(order);
         }
     }
+
+    public class RemoveItemsFromOrderCommandHandler : ICommandHandler<RemoveItemsFromOrderCommand>
+    {
+        private readonly IOrderRepository _orderRepository;
+
+        public RemoveItemsFromOrderCommandHandler(IOrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+
+        public void Handle(RemoveItemsFromOrderCommand command)
+        {
+            var order = _orderRepository.Get(command.OrderId);
+
+            order.RemoveItem(command.ItemsId.ToArray());
+
+            _orderRepository.Update(order);
+        }
+    }
 }

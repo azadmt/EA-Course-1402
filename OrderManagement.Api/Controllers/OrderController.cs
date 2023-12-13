@@ -28,5 +28,12 @@ namespace OrderManagement.Api.Controllers
             _commandBus.Send(command);
             return Ok();
         }
+
+        [HttpPost(nameof(RemoveItemsFromOrder))]
+        public IActionResult RemoveItemsFromOrder(RemoveItemsFromOrderCommand command)
+        {
+            _commandBus.Send(command);
+            return Ok();
+        }
     }
 }
