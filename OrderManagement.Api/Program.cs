@@ -27,8 +27,23 @@ namespace OrderManagement.Api
             builder.Services.AddSwaggerGen();
             //builder.Services.AddScoped<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
             //builder.Services.AddScoped<ICommandHandler<AddNewItemsToOrderCommand>, AddNewItemsToOrderCommandHandler>();
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            //  builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IGuidProvider, GuidProvider>();
+
+            builder.Services.Scan(scan => scan
+              .FromAssemblyOf<OrderRepository>() // 1. Find the concrete classes
+              .AddClasses()        //    to register
+              .UsingRegistrationStrategy(RegistrationStrategy.Skip) // 2. Define how to handle duplicates
+              .AsMatchingInterface()    // 2. Specify which services they are registered as
+              .WithScopedLifetime()); // 3. Set the lifetime for the services
+
+            // builder.Services.Scan(selector => selector
+            //    .FromAssemblyOf<OrderRepository>()
+            //    .AddClasses(classSelector =>
+            //        classSelector.AssignableTo<IOrderRepository>())
+            //    .AsMatchingInterface()
+            //    .WithScopedLifetime()
+            //);
 
             builder.Services.Scan(scan => scan
             .FromAssemblies(typeof(CreateOrderCommandHandler).Assembly)
