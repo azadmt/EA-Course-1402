@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using OrderManagement.Domain.Order;
+using OrderManagement.Domain.Order.State;
 
 namespace OrderManagement.Persistence.EF.Mapping
 {
@@ -13,6 +14,11 @@ namespace OrderManagement.Persistence.EF.Mapping
             builder.Property(p => p.OrderDate);
             builder.Property(p => p.TotalPrice);
             builder.Property(p => p.CustomerId);
+            builder.Property(p => p.State)
+                .HasConversion(
+                p => p.GetType().Name,
+                p => GetOrderState(p)
+                );
 
             builder.OwnsMany(x => x.OrderItems, oi =>
             {
@@ -34,6 +40,18 @@ namespace OrderManagement.Persistence.EF.Mapping
             //    .Metadata
             //    .PrincipalToDependent
             //    .SetPropertyAccessMode(PropertyAccessMode.Field);
+        }
+
+        public OrderState GetOrderState(string state)
+        {
+            return state switch
+            {
+                nameof(NewState) => new NewState(),
+                nameof(RejectState) => new RejectState(),
+                nameof(PaiedState) => new PaiedState(),
+                nameof(DeliverdState) => new DeliverdState(),
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Metadata.Ecma335;
+using OrderManagement.Domain.Order.State;
 
 namespace OrderManagement.Domain.Order
 {
@@ -22,6 +24,7 @@ namespace OrderManagement.Domain.Order
         private OrderAggregate(Guid id, Guid customerId) : base(id)
         {
             CustomerId = customerId;
+            State = new NewState();
         }
 
         public static OrderAggregate CreateOrder(Guid id, Guid customerId, List<OrderItemDto> orderItems)
@@ -52,5 +55,6 @@ namespace OrderManagement.Domain.Order
         public DateTime OrderDate { get; private set; }
         public decimal TotalPrice { get; private set; }
         public Guid CustomerId { get; private set; }
+        public OrderState State { get; private set; }
     }
 }
