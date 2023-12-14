@@ -40,7 +40,7 @@ namespace OrderManagement.Domain.Order
 
         public void AddOrderItem(Guid productId, int quantity, decimal unitPrice)
         {
-            _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), Id, productId, quantity, unitPrice));
+            _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), productId, quantity, unitPrice));
         }
 
         public void RemoveItem(Guid[] orderItemIds)

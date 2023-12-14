@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Framework.Core.Persistence;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Framework.Core
 {
@@ -19,7 +20,7 @@ namespace Framework.Core
             {
                 throw new InvalidOperationException(string.Join("\r\n", validationResult.Errors));
             }
-            var handler = serviceProvider.GetService<ICommandHandler<TCommand>>();
+            var handler = new LoggerCommandHandlerDecorator<TCommand>(serviceProvider.GetService<ICommandHandler<TCommand>>());
 
             handler.Handle(command);
         }
