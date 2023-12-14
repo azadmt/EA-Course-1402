@@ -32,14 +32,6 @@ namespace OrderManagement.Persistence.EF.Mapping
 
             builder.Metadata.FindNavigation(nameof(OrderAggregate.OrderItems))
              .SetPropertyAccessMode(PropertyAccessMode.Field);
-            //builder.HasMany(p => p.OrderItems)
-            //    .WithOne(x => x.Order)
-            //    .HasForeignKey(x => x.OrderId)
-            //    .OnDelete(DeleteBehavior.Cascade)
-            //    .OnDelete(DeleteBehavior.Cascade)
-            //    .Metadata
-            //    .PrincipalToDependent
-            //    .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
 
         public OrderState GetOrderState(string state)
