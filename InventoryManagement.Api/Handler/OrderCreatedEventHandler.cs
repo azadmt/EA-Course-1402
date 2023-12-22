@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Api.Service;
+using InventoryManagement.Contract;
 using MassTransit;
 using OrderManagement.Domain.Contract;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -24,7 +25,7 @@ namespace InventoryManagement.Api.Handler
                 }
                 catch (Exception)
                 {
-                    await context.Publish(new StockAdjusmentRejectedEvent(context.Message.OrderId));
+                    await context.Publish(new StockAdjusmentConfirmedEvent(context.Message.OrderId));
                     throw;
                 }
             }
