@@ -2,7 +2,7 @@
 {
     public abstract class OrderState
     {
-        public virtual OrderState New() => throw new NotSupportedException();
+        public virtual OrderState Pending() => throw new NotSupportedException();
 
         public virtual OrderState Paied() => throw new NotSupportedException();
 
@@ -33,7 +33,11 @@
     {
     }
 
-    public class NewState : OrderState
+    public class PendingState : OrderState
     {
+        public override OrderState Reject()
+        {
+            return new RejectState();
+        }
     }
 }

@@ -14,5 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryManagement.Contract\InventoryManagement.Contract.csproj" />
+    <ProjectReference Include="..\OrderManagement.Application\OrderManagement.Application.csproj" />
   </ItemGroup>
 </Project>

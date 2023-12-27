@@ -24,7 +24,7 @@ namespace OrderManagement.Domain.Order
         private OrderAggregate(Guid id, Guid customerId) : base(id)
         {
             CustomerId = customerId;
-            State = new NewState();
+            State = new PendingState();
         }
 
         public static OrderAggregate CreateOrder(Guid id, Guid customerId, List<OrderItemDto> orderItems)
