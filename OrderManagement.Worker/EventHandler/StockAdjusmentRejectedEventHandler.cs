@@ -14,9 +14,9 @@ namespace OrderManagement.Worker.EventHandler
         {
             //Order-> Rejected
             // publish event
+            throw new NotImplementedException();
         }
     }
-
 
     internal class StockAdjusmentConfirmedEventHandler : IConsumer<StockAdjusmentConfirmedEvent>
     {
