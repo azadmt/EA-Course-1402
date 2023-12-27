@@ -83,6 +83,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Contrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Worker", "OrderManagement.Worker\OrderManagement.Worker.csproj", "{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{2063B81D-0922-407A-8788-8BEB13EEBD89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -185,6 +187,10 @@ Global
 		{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -229,6 +235,7 @@ Global
 		{93EF446D-B947-40F9-BCC1-8067F07709D7} = {1D6B8D22-B972-4D8F-8112-495A9BD83388}
 		{CA342E67-E3E3-4B5F-B3F9-DD1CA07B1609} = {CC56AC4A-4D91-44BB-BD7F-5F75A52E99EF}
 		{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1} = {2F28B2FB-72E2-47EF-AE31-99C13484CCE5}
+		{2063B81D-0922-407A-8788-8BEB13EEBD89} = {B22AEE7B-43E7-4FE9-985D-614EE4E637E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1099A149-A245-44D9-BDA5-46C95DA7598D}
