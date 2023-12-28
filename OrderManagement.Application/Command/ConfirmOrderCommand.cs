@@ -1,12 +1,10 @@
 ﻿using Framework.Core;
-using OrderManagement.Domain.Contract.Dto;
 
 namespace OrderManagement.Application
 {
-    public class CreateOrderCommand : ICommand
+    public class ConfirmOrderCommand : ICommand
     {
-        public Guid CustomerId { get; set; }
-        public List<OrderItemDto> Items { get; set; }
+        public Guid OrderId { get; set; }
 
         public CommandValidationResult Validate()
         {

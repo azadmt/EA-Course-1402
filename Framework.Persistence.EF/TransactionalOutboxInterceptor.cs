@@ -43,9 +43,9 @@ namespace Framework.Persistence.EF
                     sb.Append($" , ");
             }
 
-            //dbcontext
-            //         .Database
-            //         .ExecuteSqlRaw(sb.ToString(), paramItems.ToArray());
+            dbcontext
+                     .Database
+                     .ExecuteSqlRaw(sb.ToString(), paramItems.ToArray());
 
             return base.SavedChanges(eventData, result);
         }

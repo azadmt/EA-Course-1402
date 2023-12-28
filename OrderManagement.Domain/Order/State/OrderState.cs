@@ -39,5 +39,10 @@
         {
             return new RejectState();
         }
+
+        public override OrderState Confirmed()
+        {
+            return new ConfirmedState();
+        }
     }
 }

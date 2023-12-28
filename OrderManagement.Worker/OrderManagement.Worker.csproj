@@ -10,10 +10,12 @@
   <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryManagement.Contract\InventoryManagement.Contract.csproj" />
     <ProjectReference Include="..\OrderManagement.Application\OrderManagement.Application.csproj" />
+    <ProjectReference Include="..\OrderManagement.Persistence.EF\OrderManagement.Persistence.EF.csproj" />
   </ItemGroup>
 </Project>

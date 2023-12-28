@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-OrderManagement.Outnox.EventPublisher-2c46441a-4326-4e09-9150-23e5e0a303d6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Bus.MassTransit\Framework.Bus.MassTransit.csproj" />
+    <ProjectReference Include="..\Framework.OutboxEventPublisher\Framework.OutboxEventPublisher.csproj" />
+    <ProjectReference Include="..\OrderManagement.Domain.Contract\OrderManagement.Domain.Contract.csproj" />
+  </ItemGroup>
+</Project>

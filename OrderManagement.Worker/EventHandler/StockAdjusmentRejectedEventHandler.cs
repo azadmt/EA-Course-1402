@@ -17,14 +17,4 @@ namespace OrderManagement.Worker.EventHandler
             throw new NotImplementedException();
         }
     }
-
-    internal class StockAdjusmentConfirmedEventHandler : IConsumer<StockAdjusmentConfirmedEvent>
-    {
-        public Task Consume(ConsumeContext<StockAdjusmentConfirmedEvent> context)
-        {
-            //Order-> Approved
-            // publish event
-            throw new NotImplementedException();
-        }
-    }
 }

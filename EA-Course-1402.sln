@@ -81,9 +81,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipping.Contract", "Shippi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Contract", "InventoryManagement.Contract\InventoryManagement.Contract.csproj", "{CA342E67-E3E3-4B5F-B3F9-DD1CA07B1609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Worker", "OrderManagement.Worker\OrderManagement.Worker.csproj", "{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Worker", "OrderManagement.Worker\OrderManagement.Worker.csproj", "{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{2063B81D-0922-407A-8788-8BEB13EEBD89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIGateway", "APIGateway\APIGateway.csproj", "{2063B81D-0922-407A-8788-8BEB13EEBD89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagement.Outnox.EventPublisher", "OrderManagement.Outnox.EventPublisher\OrderManagement.Outnox.EventPublisher.csproj", "{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +193,10 @@ Global
 		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2063B81D-0922-407A-8788-8BEB13EEBD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,6 +242,7 @@ Global
 		{CA342E67-E3E3-4B5F-B3F9-DD1CA07B1609} = {CC56AC4A-4D91-44BB-BD7F-5F75A52E99EF}
 		{BE60C4EF-502D-41B0-AADA-0B8B5D1F5CC1} = {2F28B2FB-72E2-47EF-AE31-99C13484CCE5}
 		{2063B81D-0922-407A-8788-8BEB13EEBD89} = {B22AEE7B-43E7-4FE9-985D-614EE4E637E9}
+		{CAEEEEC9-26AE-4D5C-8254-9DFB2471F4DE} = {4D30AA81-8E66-466D-85CA-97AF401CB073}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1099A149-A245-44D9-BDA5-46C95DA7598D}

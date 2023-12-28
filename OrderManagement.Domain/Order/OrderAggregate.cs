@@ -1,16 +1,6 @@
-﻿using Ardalis.GuardClauses;
-using Framework.Domain;
+﻿using Framework.Domain;
 using OrderManagement.Domain.Contract;
-using OrderManagement.Domain.Order.Exception;
 using OrderManagement.Domain.Contract.Dto;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection.Metadata.Ecma335;
 using OrderManagement.Domain.Order.State;
 
 namespace OrderManagement.Domain.Order
@@ -41,6 +31,18 @@ namespace OrderManagement.Domain.Order
         public void AddOrderItem(Guid productId, int quantity, decimal unitPrice)
         {
             _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), productId, quantity, unitPrice));
+        }
+
+        public void Confirm()
+        {
+            State = State.Confirmed();
+            AddChanges(new OrderConfirmedEvent(Id));
+        }
+
+        public void Reject()
+        {
+            State = State.Reject();
+            AddChanges(new OrderRejectedEvent(Id));
         }
 
         public void RemoveItem(Guid[] orderItemIds)

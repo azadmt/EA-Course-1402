@@ -38,7 +38,7 @@ namespace OrderManagement.Persistence.EF.Mapping
         {
             return state switch
             {
-                nameof(NewState) => new NewState(),
+                nameof(PendingState) => new PendingState(),
                 nameof(RejectState) => new RejectState(),
                 nameof(PaiedState) => new PaiedState(),
                 nameof(DeliverdState) => new DeliverdState(),
