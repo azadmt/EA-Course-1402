@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using MassTransit;
 using Framework.Bus.MassTransit;
 using Catalog.Domain.Contract;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.WebApi
 {
@@ -42,6 +45,7 @@ namespace Catalog.WebApi
                 // .AddDbContext<ProductCatalogDbContext>(opt => opt.UseInMemoryDatabase(nameof(ProductCatalogDbContext)))
 
                 ;
+
             builder.Services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
@@ -55,7 +59,7 @@ namespace Catalog.WebApi
             });
 
             //  builder.Services.AddMassTransitHostedService();
-
+            AddHealthCheck(builder.Services, builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -64,12 +68,33 @@ namespace Catalog.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseRouting();
             app.UseAuthorization();
+            app.UseHttpsRedirection();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                //Sets the health endpoint
+                endpoints.MapHealthChecksUI();
+            });
+            app.UseHealthChecksUI();
             app.MapControllers();
+            app.MapHealthChecks("/hc");
+            app.MapHealthChecks("/hc-d", new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
+            app.UseHealthChecksUI();
             app.Run();
+        }
+
+        private static void AddHealthCheck(IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+            hcBuilder.AddSqlServer(configuration.GetConnectionString("default"));
+            hcBuilder.AddRabbitMQ(new Uri("amqp://guest:guest@localhost:5672"));
         }
     }
 }
