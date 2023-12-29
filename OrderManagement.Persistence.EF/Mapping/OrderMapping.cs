@@ -11,6 +11,8 @@ namespace OrderManagement.Persistence.EF.Mapping
         {
             builder.ToTable("Orders").HasKey(p => p.Id);
             builder.Property(p => p.Id).ValueGeneratedNever();
+            builder.Property(x => x.RowVersion).IsConcurrencyToken();
+
             builder.Property(p => p.OrderDate);
             builder.Property(p => p.TotalPrice);
             builder.Property(p => p.CustomerId);

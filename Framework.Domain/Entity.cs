@@ -6,6 +6,7 @@
         { }
 
         public TId Id { get; private set; }
+        public byte[] RowVersion{ get; private set; }
 
         public Entity(TId id)
         {

@@ -30,19 +30,26 @@ namespace OrderManagement.Domain.Order
 
         public void AddOrderItem(Guid productId, int quantity, decimal unitPrice)
         {
+            if(State.CanEdit)
             _orderItems.Add(OrderItem.CreateOrderItem(Guid.NewGuid(), productId, quantity, unitPrice));
         }
 
         public void Confirm()
-        {
+        {           
             State = State.Confirmed();
             AddChanges(new OrderConfirmedEvent(Id));
         }
 
         public void Reject()
-        {
+        {          
             State = State.Reject();
             AddChanges(new OrderRejectedEvent(Id));
+        }
+
+        public void Deliver()
+        {
+            State = State.Deliverd();
+           // AddChanges(new OrderRejectedEvent(Id));
         }
 
         public void RemoveItem(Guid[] orderItemIds)
@@ -57,6 +64,6 @@ namespace OrderManagement.Domain.Order
         public DateTime OrderDate { get; private set; }
         public decimal TotalPrice { get; private set; }
         public Guid CustomerId { get; private set; }
-        public OrderState State { get; private set; }
+        public OrderState State { get; private set; }  
     }
 }

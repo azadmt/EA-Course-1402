@@ -20,7 +20,7 @@ namespace Framework.Core
 
         public void Handle(TCommand command)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(command));
+            Console.WriteLine(JsonConvert.SerializeObject(command));//log To db, Server
             _handler.Handle(command);
         }
     }

@@ -2,6 +2,7 @@
 {
     public abstract class OrderState
     {
+        public virtual bool CanEdit { get; set; } = false;
         public virtual OrderState Pending() => throw new NotSupportedException();
 
         public virtual OrderState Paied() => throw new NotSupportedException();
@@ -35,6 +36,11 @@
 
     public class PendingState : OrderState
     {
+        public override bool CanEdit => true;
+        public override OrderState Deliverd()
+        {
+            return new DeliverdState();
+        }
         public override OrderState Reject()
         {
             return new RejectState();
