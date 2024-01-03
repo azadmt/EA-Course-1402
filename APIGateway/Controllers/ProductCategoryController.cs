@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using APIGateway.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 
@@ -10,10 +11,11 @@ namespace APIGateway.Controllers
     {
         public ProductCategoryController()
         {
-
         }
 
         [HttpPost]
+        //  [LogActionFilter]
+        [MyCustomAuthorizeFilter(Operation = "CreateProductCategory")]
         public IActionResult CreateProductCategory(CreateProductCategoryModel model)
         {
             var client = new RestClient("http://localhost:5095");
@@ -28,7 +30,5 @@ namespace APIGateway.Controllers
     {
         public string Code { get; set; }
         public string Name { get; set; }
-
-
     }
 }

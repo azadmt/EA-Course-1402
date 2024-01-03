@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using MassTransit;
 using Framework.Bus.MassTransit;
 using Catalog.Domain.Contract;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 
 namespace Catalog.WebApi
 {
@@ -28,7 +30,16 @@ namespace Catalog.WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("token", new OpenApiSecurityScheme
+                {
+                    Name = "token",
+                    In = ParameterLocation.Header,
+                    Description = "user token",
+                    Type = SecuritySchemeType.ApiKey
+                });
+            });
             //TODO Implement Auto register command handlers
             builder.Services.AddScoped<ICommandHandler<CreateProductCommand>, CreateProductCommandHandler>();
             builder.Services.AddScoped<ICommandHandler<CreateProductCategoryCommand>, ProductCategoryCommandHandler>();

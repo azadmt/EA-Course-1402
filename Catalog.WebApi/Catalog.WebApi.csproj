@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Catalog.Persistence.EF\Catalog.Persistence.EF.csproj" />
     <ProjectReference Include="..\Framework.Bus.MassTransit\Framework.Bus.MassTransit.csproj" />
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\Identity.Contract\Identity.Contract.csproj" />
   </ItemGroup>
 
 </Project>
