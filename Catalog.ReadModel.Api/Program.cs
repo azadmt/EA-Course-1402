@@ -16,7 +16,8 @@ namespace Catalog.ReadModel.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Host.UseSerilog((ctx, lc) =>
+            builder.Host
+                .UseSerilog((ctx, lc) =>
                         lc
                   .WriteTo.Console()
                   .WriteTo.Seq("http://localhost:5341"))
