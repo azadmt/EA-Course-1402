@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Diagnostics;
 
 namespace APIGateway.Common
 {
@@ -21,6 +20,4 @@ namespace APIGateway.Common
             // our code after action executes
         }
     }
-
-
 }

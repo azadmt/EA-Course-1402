@@ -22,6 +22,7 @@ namespace Catalog.Outbox.EventPublisher
                     {
                         x.UsingRabbitMq((context, cfg) =>
                         {
+                            cfg.UsePublishFilter(typeof(CorrelationIdPublishFilter<>), context);
                             cfg.Host("localhost", "ea", h =>
                             {
                                 h.Username("guest");

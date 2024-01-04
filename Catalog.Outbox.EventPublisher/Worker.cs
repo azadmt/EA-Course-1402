@@ -22,7 +22,7 @@ namespace Catalog.Outbox.EventPublisher
         {
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(CheckOutBox);
-            aTimer.Interval = 1000;
+            aTimer.Interval = 3000;
             aTimer.Enabled = true;
 
             //CheckOutBox(default(object), default(ElapsedEventArgs));

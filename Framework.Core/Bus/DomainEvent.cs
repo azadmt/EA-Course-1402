@@ -1,4 +1,6 @@
-﻿namespace Framework.Core
+﻿using System.Text.Json.Serialization;
+
+namespace Framework.Core
 {
     public interface IEvent
     {
@@ -12,7 +14,10 @@
             CreationDate = DateTime.Now;
         }
 
-        public Guid Id { get; private set; }
-        public DateTime CreationDate { get; private set; }
+        [JsonInclude]
+        public Guid Id { get; protected set; }
+
+        [JsonInclude]
+        public DateTime CreationDate { get; protected set; }
     }
 }
