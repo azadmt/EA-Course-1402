@@ -25,13 +25,13 @@ namespace APIGateway
             }
         }
 
-        public static string GetService(string name)
+        public static ServiceRegistryModel GetService(string name)
         {
             _services.TryGetValue(name, out var service);
             var healthyService = service?.FirstOrDefault(p => p.Healthy);
             if (healthyService is null)
                 throw new ServiceUnHealthyException($"Not found healthy service of type {name}");
-            return healthyService.Url;
+            return service.FirstOrDefault(x=>x.Healthy);
         }
 
         public static HealthCheckResult CheckHealth(string serviceUrl)

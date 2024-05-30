@@ -17,6 +17,7 @@ using Catalog.Domain.Contract;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Microsoft.Extensions.DependencyInjection;
+using RestSharp;
 
 namespace Catalog.WebApi
 {
@@ -50,7 +51,7 @@ namespace Catalog.WebApi
             {
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("localhost", "ea", h =>
+                    cfg.Host("localhost", "ea1403", h =>
                     {
                         h.Username("guest");
                         h.Password("guest");
@@ -87,7 +88,10 @@ namespace Catalog.WebApi
             });
 
             app.UseHealthChecksUI();
+            RegisterService();
+
             app.Run();
+
         }
 
         private static void AddHealthCheck(IServiceCollection services, IConfiguration configuration)
@@ -95,6 +99,14 @@ namespace Catalog.WebApi
             var hcBuilder = services.AddHealthChecks();
             hcBuilder.AddSqlServer(configuration.GetConnectionString("default"));
             hcBuilder.AddRabbitMQ(new Uri("amqp://guest:guest@localhost:5672"));
+        }
+
+        private static void RegisterService()
+        {
+            var client = new RestClient("http://localhost:5072");
+            var request = new RestRequest("/ServiceRegistry");
+            request.AddBody(new {Name= "ProductCategory", Url= "http://localhost:5095" });
+            var result = client.Post(request);
         }
     }
 }

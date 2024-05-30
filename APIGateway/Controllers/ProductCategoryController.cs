@@ -18,7 +18,7 @@ namespace APIGateway.Controllers
         public IActionResult CreateProductCategory(CreateProductCategoryModel model)
         {
             //  var serviceurl = ServiceRegistry.GetService("ProductCategory");
-            var healthResult = ServiceRegistry.CheckHealth("http://localhost:5095");
+            var healthResult = ServiceRegistry.GetService("ProductCategory");
             //var client = new RestClient("http://localhost:5095");
             var client = new RestClient("http://localhost:5095");
             var request = new RestRequest("/api/ProductCategory");
