@@ -1,4 +1,5 @@
 ﻿using Identity.Contract;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer.Controllers
 {

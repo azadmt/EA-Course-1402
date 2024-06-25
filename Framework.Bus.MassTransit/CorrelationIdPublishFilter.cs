@@ -15,6 +15,14 @@ public class CorrelationIdPublishFilter<T> :
     public Task Send(PublishContext<T> context, IPipe<PublishContext<T>> next)
     {
         context.CorrelationId = Guid.NewGuid();
+        try
+        {
+            _logger.Warning($" start usecae {context.CorrelationId} ");
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
         next.Send(context);
 
         return Task.CompletedTask;

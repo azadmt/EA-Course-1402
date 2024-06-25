@@ -7,5 +7,10 @@ namespace APIGateway.Controllers
     [ApiController]
     public class OrderManagementController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+        }
     }
 }
