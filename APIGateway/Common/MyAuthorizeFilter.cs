@@ -9,9 +9,7 @@ namespace APIGateway.Common
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var userClaim = context.HttpContext.RequestServices.GetService<UserClaim>();
-            // our code before action executes
-            if (!userClaim.HassPermission(Operation))
+            if (!context.HttpContext.User.Claims.Any(x => x.Value == Operation))
                 context.Result = new UnauthorizedResult();
         }
 
