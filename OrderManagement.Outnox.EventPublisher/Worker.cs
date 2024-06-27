@@ -18,12 +18,12 @@ namespace OrderManagement.Outnox.EventPublisher
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(CheckOutBox);
-            aTimer.Interval = 1000;
-            aTimer.Enabled = true;
+            //System.Timers.Timer aTimer = new System.Timers.Timer();
+            //aTimer.Elapsed += new ElapsedEventHandler(CheckOutBox);
+            //aTimer.Interval = 1000;
+            //aTimer.Enabled = true;
 
-            //CheckOutBox(default(object), default(ElapsedEventArgs));
+            CheckOutBox(default(object), default(ElapsedEventArgs));
         }
 
         private void CheckOutBox(object? sender, ElapsedEventArgs e)

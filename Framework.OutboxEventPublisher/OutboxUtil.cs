@@ -25,7 +25,7 @@ namespace Framework.OutboxEventPublisher
             {
                 foreach (var item in notSyncedOutbox)
                 {
-                    _eventBus.Publish(ToEvent(item));
+                    _eventBus.Publish(ToEvent(item) as IEvent, item.TraceId);
                     Console.WriteLine($"Publish Outbox :{item.EventBody}");
                 }
                 _dbConnection.UpdatePublishedDate(notSyncedOutbox.Select(x => x.Id));
