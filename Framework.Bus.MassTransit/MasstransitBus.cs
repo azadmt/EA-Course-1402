@@ -12,9 +12,9 @@ namespace Framework.Bus.MassTransit
             _bus = bus;
         }
 
-        public void Publish<TEvent>(TEvent @event)
+        public void Publish<TEvent>(TEvent @event, string traceId = null) where TEvent : class
         {
-            _bus.Publish(@event).GetAwaiter().GetResult();
+            _bus.Publish<TEvent>(@event, x => { x.Headers.Set("TraceId", traceId); }).GetAwaiter().GetResult();
         }
     }
 }

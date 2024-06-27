@@ -30,15 +30,16 @@ namespace Framework.Persistence.EF
                        .ToList();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append($"INSERT INTO outbox (EventId,EventType,EventBody) VALUES ");
+            sb.Append($"INSERT INTO outbox (EventId,EventType,EventBody,TraceId) VALUES ");
             var paramItems = new List<SqlParameter>();
             for (int i = 0; i < outbox.Count; i++)
             {
                 paramItems.Add(new SqlParameter($"@EventId{i}", outbox[i].Id.ToString()));
                 paramItems.Add(new SqlParameter($"@EventType{i}", outbox[i].GetType().AssemblyQualifiedName));
                 paramItems.Add(new SqlParameter($"@EventBody{i}", JsonConvert.SerializeObject(outbox[i])));
+                paramItems.Add(new SqlParameter($"@TraceId{i}", dbcontext.TraceId));
 
-                sb.AppendLine($" (@EventId{i},@EventType{i},@EventBody{i}) ");
+                sb.AppendLine($" (@EventId{i},@EventType{i},@EventBody{i},@TraceId{i}) ");
                 if (i != outbox.Count - 1)
                     sb.Append($" , ");
             }

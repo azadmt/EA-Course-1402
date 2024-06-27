@@ -6,6 +6,8 @@ namespace Framework.Persistence.EF
 {
     public abstract class ApplicationDbContext : DbContext, IUnitOfWork
     {
+        public string TraceId { get; protected set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }

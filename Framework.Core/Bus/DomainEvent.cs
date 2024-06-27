@@ -4,6 +4,7 @@ namespace Framework.Core
 {
     public interface IEvent
     {
+        Guid Id { get; }
     }
 
     public abstract class DomainEvent : IEvent

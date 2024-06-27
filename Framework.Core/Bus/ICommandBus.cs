@@ -7,6 +7,6 @@
 
     public interface IEventBus
     {
-        void Publish<TEvent>(TEvent @event);
+        void Publish<TEvent>(TEvent @event, string traceId = null) where TEvent : class;
     }
 }

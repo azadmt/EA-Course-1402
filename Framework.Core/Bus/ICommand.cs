@@ -5,8 +5,6 @@
         CommandValidationResult Validate();
     }
 
-
-
     public class CommandValidationResult
     {
         public static CommandValidationResult SuccessResult()
@@ -27,6 +25,7 @@
     public class OutBoxMessage
     {
         public Guid Id { get; set; }
+        public string TraceId { get; set; }
         public string EventType { get; set; }
         public string EventBody { get; set; }
         public DateTime PublishedAt { get; set; }
