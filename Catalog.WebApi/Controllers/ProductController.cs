@@ -4,6 +4,8 @@ using Catalog.Application.DataContract.Product;
 using Framework.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace Catalog.WebApi.Controllers
 {
@@ -28,9 +30,24 @@ namespace Catalog.WebApi.Controllers
         [HttpPost]
         public IActionResult CreateProduct(CreateProductCommand createProductDto)
         {
-            //productService.CreateProductCatalog(createProductDto);
-            bus.Send(createProductDto);
-            return Ok();
+            Guid CorrolationId = Guid.NewGuid();
+            try
+            {
+                //"Processed {@Position} in {Elapsed:000} ms."
+               
+                Log.Information(" CorrelationId = {@CorrolationId}, Data = {@data}",
+                    CorrolationId, JsonConvert.SerializeObject(createProductDto));
+
+                //productService.CreateProductCatalog(createProductDto);
+                bus.Send(createProductDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(" CorrelationId = {@CorrolationId}, Data = {@data}", CorrolationId, ex.ToString());
+                throw;
+            }
+        
         }
 
         [HttpPost("DeActive")]

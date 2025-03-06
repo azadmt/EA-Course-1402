@@ -14,8 +14,7 @@ namespace Catalog.Outbox.EventPublisher
         {
             IHost host = Host.CreateDefaultBuilder(args)
                   .UseSerilog((ctx, lc) =>
-                        lc
-                  .Enrich.WithMachineName()
+                        lc                  
                   .WriteTo.Console()
                   .WriteTo.Seq("http://localhost:5341"))
                 .ConfigureServices((hostContext, services) =>

@@ -16,6 +16,8 @@ using Framework.Bus.MassTransit;
 using Catalog.Domain.Contract;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
+using Serilog.AspNetCore;
+using Serilog;
 
 namespace Catalog.WebApi
 {
@@ -25,9 +27,15 @@ namespace Catalog.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+        Log.Logger = new LoggerConfiguration()
+                .Enrich.WithMachineName()
+                .Enrich.WithEnvironmentUserName()
+                .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
+                .CreateLogger()
+                ;
 
-            builder.Services.AddControllers();
+                   builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
