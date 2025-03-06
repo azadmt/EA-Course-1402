@@ -22,7 +22,7 @@ namespace Catalog.Outbox.EventPublisher
                     services.AddSingleton<IDbConnection>(new SqlConnection(hostContext.Configuration.GetConnectionString("default")));
                     services.AddSingleton<IEventBus, MasstransitBus>();
                     services.AddSingleton<OutboxManager>();
-
+                    Log.Logger=new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("").CreateLogger();
                     services.AddMassTransit(x =>
                     {
                         x.UsingRabbitMq((context, cfg) =>
